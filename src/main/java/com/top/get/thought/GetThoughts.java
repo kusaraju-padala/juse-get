@@ -60,14 +60,14 @@ public class GetThoughts {
 
 		String getFeed = "SELECT `thought`.`t_id` as thoughtid, `thought`.`t_user_id` as userid, `thought`.`t_full_content` as fullcontent,"
 				+ " `thought`.`t_post_id` as postid, `thought`.`t_downvotes_count` as downvotescount, `thought`.`t_upvotes_count` as upvotescount, "
-				+ "`thought`.`t_timestamp` as timestamp FROM `topdb`.`thought` where `t_post_id` = "+ postid+" ORDER BY upvotescount"
+				+ "`thought`.`t_timestamp` as timestamp FROM `thought` where `t_post_id` = "+ postid+" ORDER BY upvotescount"
 				+ " LIMIT " + offset + ", " + limit;
 
 		return getFeed;
 	}
 
 	private String getIncrementViewQuery(List<Map<String, Object>> gf) {
-		String updateQuery = "UPDATE `topdb`.`poststats` SET  `ps_view_count` = `ps_view_count` + 1 WHERE `ps_post_id` IN (";
+		String updateQuery = "UPDATE `poststats` SET  `ps_view_count` = `ps_view_count` + 1 WHERE `ps_post_id` IN (";
 		for (Map<String, Object> row : gf) {
 			updateQuery += row.get("pid") + ",";
 		}

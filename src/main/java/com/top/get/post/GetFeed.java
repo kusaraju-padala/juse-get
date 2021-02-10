@@ -65,9 +65,9 @@ public class GetFeed {
 				+ "`post`.`p_category` as postcategory, `post`.`p_timestamp` as timestamp, `post`.`p_countryid` as countryid, "
 				+ "`post`.`p_stateid` as stateid, `post`.`p_languageid` as languageid,`post`.`p_thumb_image_url` as thumbnailurl,"
 				+ "`post`.`p_is_only_text` as isonlytext,  `poststats`.`ps_view_count` viewcount, `poststats`.`ps_reactions_count` as reactioncount, "
-				+ "`poststats`.`ps_thoughts_count` as thoughtscount FROM `topdb`.`post` left join `topdb`.`postindex`"
+				+ "`poststats`.`ps_thoughts_count` as thoughtscount FROM `post` left join `postindex`"
 				+ " on `post`.`p_id`= `postindex`.`pi_post_id`"
-				+ " left outer join `topdb`.`poststats` on `poststats`.`ps_post_id`= `postindex`.`pi_post_id`"
+				+ " left outer join `poststats` on `poststats`.`ps_post_id`= `postindex`.`pi_post_id`"
 				+ " WHERE `pi_location` IN (" + "'" + location.replace(",", "','") + "')";
 
 		if (null != dynamic && !"".equalsIgnoreCase(dynamic)) {
@@ -84,7 +84,7 @@ public class GetFeed {
 	}
 
 	private String getIncrementViewQuery(List<Map<String, Object>> gf) {
-		String updateQuery = "UPDATE `topdb`.`poststats` SET  `ps_view_count` = `ps_view_count` + 1 WHERE `ps_post_id` IN (";
+		String updateQuery = "UPDATE `poststats` SET  `ps_view_count` = `ps_view_count` + 1 WHERE `ps_post_id` IN (";
 		for (Map<String, Object> row : gf) {
 			updateQuery += row.get("pid") + ",";
 		}

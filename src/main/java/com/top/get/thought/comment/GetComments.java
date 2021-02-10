@@ -36,8 +36,8 @@ public class GetComments {
 		String getFeed = "SELECT `comment`.`c_id` as commentid, `comment`.`c_content` as content, "
 				+ "`comment`.`c_user_id` as userid, `comment`.`c_post_id` as postid, `comment`.`c_thought_id` as thoughtid,"
 				+ " `comment`.`c_is_parent_comment` as isparentcomment, `user`.`u_name` as username, `user`.`u_uname` as uniquename,"
-				+ " `user`.`u_profile_image_thumb_url` as profileurl FROM `topdb`.`comment` "
-				+ "left join `topdb`.`user` on `c_id`=`u_id` where `c_thought_id`="
+				+ " `user`.`u_profile_image_thumb_url` as profileurl FROM `comment` "
+				+ "left join `user` on `c_id`=`u_id` where `c_thought_id`="
 				+ thoughtId + " LIMIT " + offset + ", " + limit;
 
 		return getFeed;

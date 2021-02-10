@@ -29,7 +29,7 @@ public class GetUserThoughts {
 
 		String query = "SELECT `post`.`p_id` as postid, `post`.`p_heading` as heading, `thought`.`t_id` as thoughtid, "
 				+ " `thought`.`t_full_content` as fullcontent, `thought`.`t_downvotes_count` as downvotescount, `thought`.`t_upvotes_count` as upvotescount"
-				+ " FROM `topdb`.`post` left outer join `topdb`.`thought` on `t_post_id`=`p_id` WHERE `t_user_id` = " + userid;
+				+ " FROM `post` left outer join `thought` on `t_post_id`=`p_id` WHERE `t_user_id` = " + userid;
 
 		return query;
 	}
