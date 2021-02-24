@@ -28,9 +28,9 @@ public class GetFullThought {
 
 	private String getThoughtQuery(Integer thoughtid) {
 
-		String query = "SELECT `thought`.`t_id` as thoughtid, `thought`.`t_user_id` as userid, `thought`.`t_full_content` as fullcontent, `thought`.`t_source_format` as sourceformat, "
+		String query = "SELECT `post`.`p_id` as postid, `post`.`p_heading` as heading, `thought`.`t_id` as thoughtid, `thought`.`t_user_id` as userid, `thought`.`t_full_content` as fullcontent, `thought`.`t_source_format` as sourceformat, "
 				+ " `thought`.`t_post_id` as postid, `thought`.`t_downvotes_count` as downvotescount, `thought`.`t_upvotes_count` as upvotescount, "
-				+ "`thought`.`t_timestamp` as timestamp FROM `thought` where `t_id` = " + thoughtid;
+				+ "`thought`.`t_timestamp` as timestamp FROM `thought` left outer join `post` on `t_post_id`=`p_id` where `t_id` = " + thoughtid;
 
 		return query;
 	}

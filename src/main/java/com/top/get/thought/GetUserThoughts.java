@@ -12,11 +12,15 @@ import java.util.Map;
 
 import com.top.lib.dbconnection.DBConnectionUtil;
 
+
 public class GetUserThoughts {
-	public List<Map<String, Object>> getUserThoughts(Integer userid) throws Exception {
+	
+	public static final Integer PAGE_SIZE = 10;
+	
+	public List<Map<String, Object>> getUserThoughts(Integer userid, Integer pagenumber) throws Exception {
 
 		try (Connection conn = DBConnectionUtil.getConnection(); Statement stmt = conn.createStatement();) {
-			stmt.execute(getThoughtsQuery(userid));
+			stmt.execute(getThoughtsQuery(userid, pagenumber));
 			List<Map<String, Object>> gf = extractData(stmt.getResultSet());
 			return gf;
 		} catch (Exception e) {
@@ -25,12 +29,16 @@ public class GetUserThoughts {
 		}
 	}
 
-	private String getThoughtsQuery(Integer userid) {
+	private String getThoughtsQuery(Integer userid, Integer pagenumber) {
+		
+		Integer limit = PAGE_SIZE;
+		Integer offset = (pagenumber - 1) * PAGE_SIZE;
 
 		String query = "SELECT `post`.`p_id` as postid, `post`.`p_heading` as heading, `thought`.`t_id` as thoughtid, "
 				+ " `thought`.`t_full_content` as fullcontent, `thought`.`t_source_format` as sourceformat, `thought`.`t_downvotes_count` as downvotescount, `thought`.`t_upvotes_count` as upvotescount"
 				+ " FROM `post` left outer join `thought` on `t_post_id`=`p_id` WHERE `t_user_id` = " + userid;
 
+		query += " LIMIT " + offset + ", " + limit;
 		return query;
 	}
 

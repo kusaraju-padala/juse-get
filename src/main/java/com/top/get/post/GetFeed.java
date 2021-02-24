@@ -15,7 +15,7 @@ import com.top.lib.dbconnection.DBConnectionUtil;
 
 public class GetFeed {
 
-	private static final Integer PAGE_SIZE = 16;
+	private static final Integer PAGE_SIZE = 10;
 	private static final String DEFAULT_LOCALTION = "india";
 	//private static final String DEFAULT_DYNAMIC = "fresh";
 
