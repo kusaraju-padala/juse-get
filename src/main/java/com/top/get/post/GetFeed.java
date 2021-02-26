@@ -63,8 +63,8 @@ public class GetFeed {
 
 		String getFeed = "SELECT `post`.`p_id` as pid, `post`.`p_heading` as heading,`post`.`p_body` as body,`post`.`p_post_type` as posttype, `post`.`p_owner_id` as adminsource, "
 				+ "`post`.`p_category` as postcategory, `post`.`p_timestamp` as timestamp, `post`.`p_countryid` as countryid, "
-				+ "`post`.`p_stateid` as stateid, `post`.`p_languageid` as languageid,`post`.`p_thumb_image_url` as thumbnailurl,"
-				+ "`post`.`p_is_only_text` as isonlytext,  `poststats`.`ps_view_count` viewcount, `poststats`.`ps_reactions_count` as reactioncount, "
+				+ "`post`.`p_stateid` as stateid, `post`.`p_languageid` as languageid,`post`.`p_image_url` as thumbnailurl,"
+				+ " `poststats`.`ps_view_count` viewcount, `poststats`.`ps_reactions_count` as reactioncount, "
 				+ "`poststats`.`ps_thoughts_count` as thoughtscount FROM `post` left join `postindex`"
 				+ " on `post`.`p_id`= `postindex`.`pi_post_id`"
 				+ " left outer join `poststats` on `poststats`.`ps_post_id`= `postindex`.`pi_post_id`"
