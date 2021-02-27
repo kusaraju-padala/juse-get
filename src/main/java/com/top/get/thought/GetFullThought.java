@@ -30,7 +30,11 @@ public class GetFullThought {
 
 		String query = "SELECT `post`.`p_id` as postid, `post`.`p_heading` as heading, `thought`.`t_id` as thoughtid, `thought`.`t_user_id` as userid, `thought`.`t_full_content` as fullcontent, `thought`.`t_source_format` as sourceformat, "
 				+ " `thought`.`t_post_id` as postid, `thought`.`t_downvotes_count` as downvotescount, `thought`.`t_upvotes_count` as upvotescount, "
-				+ "`thought`.`t_timestamp` as timestamp FROM `thought` left outer join `post` on `t_post_id`=`p_id` where `t_id` = " + thoughtid;
+				+ "`post`.`p_body` as body,`post`.`p_post_type` as posttype, `post`.`p_owner_id` as adminsource, `post`.`p_category` as postcategory, `post`.`p_timestamp` as timestamp, `post`.`p_countryid` as countryid, `post`.`p_news_source` as newssource,"  
+				+ "`post`.`p_stateid` as stateid, `post`.`p_languageid` as languageid,`post`.`p_image_url` as thumbnailurl," 
+				+ " `poststats`.`ps_view_count` viewcount, `poststats`.`ps_reactions_count` as reactioncount," 
+				+ "`poststats`.`ps_thoughts_count` as thoughtscount,"
+				+ "`thought`.`t_timestamp` as timestamp FROM `thought` left outer join `post` on `t_post_id`=`p_id` left outer join `poststats` on `p_id`=`ps_post_id` where `t_id` = " + thoughtid;
 
 		return query;
 	}
