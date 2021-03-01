@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.top.lib.dbconnection.DBConnectionUtil;
+import com.top.lib.db.connection.DBConnectionUtil;
 
 
 public class GetUserThoughts {

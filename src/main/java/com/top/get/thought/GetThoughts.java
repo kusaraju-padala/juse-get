@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import com.top.lib.dbconnection.DBConnectionUtil;
+import com.top.lib.db.connection.DBConnectionUtil;
 
 public class GetThoughts {
 	private static final Integer PAGE_SIZE = 7;
