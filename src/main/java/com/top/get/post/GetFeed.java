@@ -19,11 +19,11 @@ public class GetFeed {
 	private static final String DEFAULT_LOCALTION = "india";
 	//private static final String DEFAULT_DYNAMIC = "fresh";
 
-	public List<Map<String, Object>> getFeed(Integer pagenumber, String location, String dynamic, String topics)
+	public List<Map<String, Object>> getFeed(Integer pagenumber, String location, Integer language, String topics)
 			throws Exception {
 
 		try (Connection conn = DBConnectionUtil.getConnection(); Statement stmt = conn.createStatement();) {
-			stmt.execute(getFeedQuery(pagenumber, location, dynamic, topics));
+			stmt.execute(getFeedQuery(pagenumber, location, language, topics));
 			List<Map<String, Object>> gf = extractData(stmt.getResultSet());
 			asyncInvoke(gf);
 			return gf;
@@ -52,7 +52,7 @@ public class GetFeed {
 		}
 	}
 
-	private String getFeedQuery(Integer pagenumber, String location, String dynamic, String topics) {
+	private String getFeedQuery(Integer pagenumber, String location, Integer language, String topics) {
 
 		Integer limit = PAGE_SIZE;
 		Integer offset = (pagenumber - 1) * PAGE_SIZE;
@@ -70,8 +70,11 @@ public class GetFeed {
 				+ " left outer join `poststats` on `poststats`.`ps_post_id`= `postindex`.`pi_post_id`"
 				+ " WHERE `pi_location` IN (" + "'" + location.replace(",", "','") + "')";
 
-		if (null != dynamic && !"".equalsIgnoreCase(dynamic)) {
-			getFeed+=" and `pi_dynamic` IN (" + "'" + dynamic.replace(",", "','") + "')";
+		if(language==null) {
+			language=2;
+		}
+		if (null != language && (language==1 || language == 2)) {
+			getFeed+=" and `pi_language` = " + language;
 		}
 		if (null != topics && !"".equalsIgnoreCase(topics)) {
 			getFeed+=" and `pi_topic` IN (" + "'" + topics.replace(",", "','") + "')";
