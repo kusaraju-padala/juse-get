@@ -65,8 +65,8 @@ public class GetFeed {
 				+ "`post`.`p_category` as postcategory, `post`.`p_timestamp` as timestamp, `post`.`p_countryid` as countryid, `post`.`p_news_source` as newssource,"
 				+ "`post`.`p_stateid` as stateid, `post`.`p_languageid` as languageid,`post`.`p_image_url` as thumbnailurl,"
 				+ " `poststats`.`ps_view_count` viewcount, `poststats`.`ps_reactions_count` as reactioncount, "
-				+ "`poststats`.`ps_thoughts_count` as thoughtscount FROM `post` left join `postindex`"
-				+ " on `post`.`p_id`= `postindex`.`pi_post_id`"
+				+ "`poststats`.`ps_thoughts_count` as thoughtscount, `ps_class_thoughts_count` as classthoughtscount, `ps_nonclass_thoughts_count` as nonclassthoughtscount "
+				+ "FROM `post` left join `postindex` on `post`.`p_id`= `postindex`.`pi_post_id`"
 				+ " left outer join `poststats` on `poststats`.`ps_post_id`= `postindex`.`pi_post_id`"
 				+ " WHERE `pi_location` IN (" + "'" + location.replace(",", "','") + "')";
 
