@@ -5,7 +5,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,11 +28,31 @@ public class GetFeed {
 		try (Connection conn = DBConnectionUtil.getConnection(); Statement stmt = conn.createStatement();) {
 			stmt.execute(getFeedQuery(pagenumber, location, language, topics));
 			List<Map<String, Object>> gf = extractData(stmt.getResultSet());
+			addAgo(gf);
 			asyncInvoke(gf);
 			return gf;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
+		}
+	}
+	private void addAgo(List<Map<String, Object>> gf) {
+		long current = System.currentTimeMillis();
+		DateFormat formatter = new SimpleDateFormat("dd MMMM");
+		for(Map<String,Object> post : gf) {
+			java.sql.Timestamp timestamp = (java.sql.Timestamp)post.get("timestamp");
+			long time = timestamp.getTime();
+			long dur = current-time;
+			if(java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)<2) {
+				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)+"1 min");
+			}
+			else if(java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)<60) {
+				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)+" mins");
+			}else if(java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)<24) {
+				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)+" hrs");
+			}else {
+				post.put("timefrom",formatter.format(new Date(dur)));
+			}
 		}
 	}
 
