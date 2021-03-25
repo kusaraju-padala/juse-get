@@ -38,20 +38,20 @@ public class GetFeed {
 	}
 	private void addAgo(List<Map<String, Object>> gf) {
 		long current = System.currentTimeMillis();
-		DateFormat formatter = new SimpleDateFormat("dd MMMM");
+		DateFormat formatter = new SimpleDateFormat("dd MMM, YY");
 		for(Map<String,Object> post : gf) {
 			java.sql.Timestamp timestamp = (java.sql.Timestamp)post.get("timestamp");
 			long time = timestamp.getTime();
 			long dur = current-time;
 			if(java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)<2) {
-				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)+"1 min");
+				post.put("timefrom","1 min ago");
 			}
 			else if(java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)<60) {
-				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)+" mins");
+				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)+" mins ago");
 			}else if(java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)<24) {
-				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)+" hrs");
+				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)+" hrs ago");
 			}else {
-				post.put("timefrom",formatter.format(new Date(dur)));
+				post.put("timefrom",formatter.format(new Date(time)));
 			}
 		}
 	}
