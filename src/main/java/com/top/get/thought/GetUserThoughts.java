@@ -35,8 +35,8 @@ public class GetUserThoughts {
 		Integer offset = (pagenumber - 1) * PAGE_SIZE;
 
 		String query = "SELECT `post`.`p_id` as postid, `post`.`p_heading` as heading, `thought`.`t_id` as thoughtid, "
-				+ " `thought`.`t_full_content` as fullcontent, `thought`.`t_source_format` as sourceformat, `thought`.`t_downvotes_count` as downvotescount, `thought`.`t_upvotes_count` as upvotescount"
-				+ " FROM `post` left outer join `thought` on `t_post_id`=`p_id` WHERE `t_user_id` = " + userid;
+				+ " `thought`.`t_full_content` as fullcontent, `thought`.`t_class` as thoughtclass, `thought`.`t_source_format` as sourceformat, `thought`.`t_downvotes_count` as downvotescount, `thought`.`t_upvotes_count` as upvotescount"
+				+ " FROM `post` left outer join `thought` on `t_post_id`=`p_id` WHERE `t_user_id` = " + userid +" ORDER BY t_timestamp DESC";
 
 		query += " LIMIT " + offset + ", " + limit;
 		return query;
