@@ -44,11 +44,14 @@ public class GetFeed {
 			long time = timestamp.getTime();
 			long dur = current-time;
 			if(java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)<2) {
-				post.put("timefrom","1 min ago");
+				post.put("timefrom","just now");
 			}
 			else if(java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)<60) {
 				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(dur)+" mins ago");
-			}else if(java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)<24) {
+			}else if(java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)<1) {
+				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)+" hr ago");
+			}
+			else if(java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)<24) {
 				post.put("timefrom",java.util.concurrent.TimeUnit.MILLISECONDS.toHours(dur)+" hrs ago");
 			}else {
 				post.put("timefrom",formatter.format(new Date(time)));
